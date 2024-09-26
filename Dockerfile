@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM ubuntu:latest
 
-ARG SHOULD_BUILD_DOC=false
-
 # install necessary build tools
 RUN apt update
 RUN apt -y install \
@@ -19,8 +17,7 @@ RUN apt -y install \
     usbmuxd
 
 # ---------------------------------------------------------------------------
-
-# build libimobiledevice-glue-dev
+#                       build libimobiledevice-glue-dev
 WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/libimobiledevice-glue.git
 WORKDIR /home/libimobiledevice-glue
@@ -32,8 +29,7 @@ make install
 EOF
 
 # ---------------------------------------------------------------------------
-
-# build libplist
+#                               build libplist
 WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/libplist.git
 WORKDIR /home/libplist
@@ -45,8 +41,7 @@ make install
 EOF
 
 # ---------------------------------------------------------------------------
-
-# build libtatsu-dev
+#                            build libtatsu-dev
 WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/libtatsu.git
 WORKDIR /home/libtatsu
@@ -58,8 +53,7 @@ make install
 EOF
 
 # ---------------------------------------------------------------------------
-
-# build libimobiledevice
+#                           build libimobiledevice
 WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/libimobiledevice.git
 WORKDIR /home/libimobiledevice
@@ -71,3 +65,4 @@ make install
 EOF
 
 # ---------------------------------------------------------------------------
+WORKDIR /
