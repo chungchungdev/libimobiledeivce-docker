@@ -1,6 +1,6 @@
 # libimobiledevice-docker
 
-A docker image based on [ubuntu docker image](https://hub.docker.com/_/ubuntu) for
+A docker image based on [Ubuntu docker image](https://hub.docker.com/_/ubuntu) for
 running [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice).
 
 ## Usage
