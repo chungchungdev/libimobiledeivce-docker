@@ -1,22 +1,27 @@
 # libimobiledevice-docker
 
-A docker image for running libimobiledevice based on [ubuntu docker image](https://hub.docker.com/_/ubuntu).
+A docker image based on [ubuntu docker image](https://hub.docker.com/_/ubuntu) for
+running [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice) .
 
 ## Usage
 
-### Cloning the repo
+### Clone the Git repo
+
 ```shell
 git clone https://github.com/chungchungdev/libimobiledeivce-docker.git
 cd libimobiledevice-docker
 ```
 
-### Building the image
+### Build the image
+
 ```shell
 docker buildx build -t ubuntu/libimobiledevice:latest .
 ```
+
 You can also use the environment variable `UBUNTU_VERSION`.
 
-### Running the container
+### Run the container
+
 ```shell
 docker run -it -v /var/run:/var/run ubuntu/libimobiledevice:latest
 ```
