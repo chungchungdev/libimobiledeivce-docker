@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
-FROM ubuntu:latest
+ARG UBUNTU_VERSION=latest
+FROM ubuntu:${UBUNTU_VERSION}
 
 # install necessary build tools
 RUN apt update
@@ -17,18 +18,6 @@ RUN apt -y install \
     usbmuxd
 
 # ---------------------------------------------------------------------------
-#                       build libimobiledevice-glue-dev
-WORKDIR /home
-RUN git clone https://github.com/libimobiledevice/libimobiledevice-glue.git
-WORKDIR /home/libimobiledevice-glue
-
-RUN <<EOF
-./autogen.sh
-make
-make install
-EOF
-
-# ---------------------------------------------------------------------------
 #                               build libplist
 WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/libplist.git
@@ -36,6 +25,18 @@ WORKDIR /home/libplist
 
 RUN <<EOF
 ./autogen.sh --enable-debug --without-cython
+make
+make install
+EOF
+
+# ---------------------------------------------------------------------------
+#                       build libimobiledevice-glue-dev
+WORKDIR /home
+RUN git clone https://github.com/libimobiledevice/libimobiledevice-glue.git
+WORKDIR /home/libimobiledevice-glue
+
+RUN <<EOF
+./autogen.sh
 make
 make install
 EOF
