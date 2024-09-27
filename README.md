@@ -6,7 +6,7 @@ A docker image for running libimobiledevice based on [ubuntu docker image](https
 
 ### Cloning the repo
 ```shell
-git clone 
+git clone https://github.com/chungchungdev/libimobiledeivce-docker.git
 cd libimobiledevice-docker
 ```
 
