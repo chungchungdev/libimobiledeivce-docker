@@ -2,7 +2,7 @@
 ARG UBUNTU_VERSION=latest
 FROM ubuntu:${UBUNTU_VERSION}
 
-# install necessary build tools
+# install common dependencies
 RUN apt update
 RUN apt -y install \
     build-essential \
@@ -13,9 +13,8 @@ RUN apt -y install \
     automake \
     libtool-bin \
     libusbmuxd-dev \
-    libssl-dev \
-    libcurl4-openssl-dev \
-    usbmuxd
+    libssl-dev
+    #usbmuxd
 
 # ---------------------------------------------------------------------------
 #                               build libplist
@@ -46,6 +45,8 @@ EOF
 WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/libtatsu.git
 WORKDIR /home/libtatsu
+# install dependencies
+RUN apt install libcurl4-openssl-dev
 
 RUN <<EOF
 ./autogen.sh
@@ -66,4 +67,17 @@ make install
 EOF
 
 # ---------------------------------------------------------------------------
-WORKDIR /
+#                               build usbmuxd
+WORKDIR /home
+RUN git clone https://github.com/libimobiledevice/usbmuxd.git
+WORKDIR /home/usbmuxd
+
+RUN apt install -y \
+    libusb-1.0-0-dev \
+    udev
+
+RUN <<EOF
+./autogen.sh
+make
+make install
+EOF
