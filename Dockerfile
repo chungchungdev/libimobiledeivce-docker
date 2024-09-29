@@ -2,8 +2,11 @@
 ARG UBUNTU_VERSION=latest
 FROM ubuntu:${UBUNTU_VERSION}
 
-# install common dependencies
+ARG TIMEZONE=Etc/UTC
 RUN apt update
+# set up timezone for dependencies
+RUN DEBIAN_FRONTEND=noninteractive TZ=$TIMEZONE apt -y install tzdata
+# install common dependencies
 RUN apt -y install \
     build-essential \
     pkg-config \
@@ -12,9 +15,7 @@ RUN apt -y install \
     autoconf \
     automake \
     libtool-bin \
-    libusbmuxd-dev \
     libssl-dev
-    #usbmuxd
 
 # ---------------------------------------------------------------------------
 #                               build libplist
@@ -46,7 +47,19 @@ WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/libtatsu.git
 WORKDIR /home/libtatsu
 # install dependencies
-RUN apt install libcurl4-openssl-dev
+RUN apt install -y libcurl4-openssl-dev
+
+RUN <<EOF
+./autogen.sh
+make
+make install
+EOF
+
+# ---------------------------------------------------------------------------
+#                               build libusbmuxd
+WORKDIR /home
+RUN git clone https://github.com/libimobiledevice/libusbmuxd.git
+WORKDIR /home/libusbmuxd
 
 RUN <<EOF
 ./autogen.sh
@@ -71,7 +84,7 @@ EOF
 WORKDIR /home
 RUN git clone https://github.com/libimobiledevice/usbmuxd.git
 WORKDIR /home/usbmuxd
-
+#
 RUN apt install -y \
     libusb-1.0-0-dev \
     udev

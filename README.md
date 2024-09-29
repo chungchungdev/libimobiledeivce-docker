@@ -15,10 +15,15 @@ cd libimobiledevice-docker
 ### Build the image
 
 ```shell
-docker buildx build -t ubuntu/libimobiledevice:latest .
+docker buildx build -t ubuntu/libimobiledevice:latest --build-arg TIMEZONE=$(cat /etc/timezone) .
 ```
 
-You can also use the environment variable `UBUNTU_VERSION`.
+#### Environment Variable
+`UBUNTU_VERSION`<br>
+* Default: `latest`
+
+`TIMEZONE`<br>
+* Default: `Etc/UTC`
 
 ### Run the container
 
