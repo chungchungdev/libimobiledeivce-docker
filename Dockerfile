@@ -94,3 +94,5 @@ RUN <<EOF
 make
 make install
 EOF
+
+WORKDIR /home
